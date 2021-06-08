@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       C:\Users\fryeac                                           */
-/*    Created:      Wed May 26 2021                                           */
+/*    Author:       Andrew Frye                                           */
+/*    Created:      Tuesday June 8, 2021                                           */
 /*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
@@ -31,7 +31,6 @@ void roboConfigs(){
 }
 
 int main() {
-  // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   roboConfigs();
 
@@ -40,7 +39,6 @@ int main() {
   obj.open();
   wait(10, seconds);
   obj.closeOnRing();
-  //auton();
 }
 
 

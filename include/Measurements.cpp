@@ -5,7 +5,7 @@ using namespace vex;
 class measurements{
   public:
     int claw = 180;
-    int clawRing = 45;
+    int clawRing = 90;
 };
 
 class measuredMoves{
