@@ -67,5 +67,3 @@ public:
 
   
 };
-int callback(){return 0;}
-thread (callback);
