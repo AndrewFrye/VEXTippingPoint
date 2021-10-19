@@ -17,7 +17,7 @@
 // Forks                motor_group   4, 5
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
-#include "Measurements.cpp"
+#include "Measurements.h"
 #include "vex.h"
 #include <thread>
 
