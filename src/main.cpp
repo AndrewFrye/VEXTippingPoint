@@ -30,13 +30,36 @@ void roboConfigs() {
   Drivetrain.setDriveVelocity(100, percent);
 }
 
+competition Competition;
 
+void pre_auton(void){
+    vexcodeInit();
+    roboConfigs();
+}
+
+void autonomous(void){
+
+}
+
+void usercontrol(void){
+  while(1){
+    wait(20, msec);
+  }
+}
 
 int main() {
 
-  // initialize the robot
-  vexcodeInit();
-  roboConfigs();
+  Competition.autonomous(autonomous);
+  Competition.drivercontrol(usercontrol);
+
+  // Run the pre-autonomous function.
+  pre_auton();
+
+  // Prevent main from exiting with an infinite loop.
+  while (true) {
+    wait(100, msec);
+  }
+  
 
   
 }

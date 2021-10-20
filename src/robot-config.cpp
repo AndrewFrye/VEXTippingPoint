@@ -9,14 +9,15 @@ brain  Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor LeftDriveSmart = motor(PORT1, ratio18_1, false);
-motor RightDriveSmart = motor(PORT10, ratio18_1, true);
+motor LeftDriveSmart = motor(PORT11, ratio18_1, false);
+motor RightDriveSmart = motor(PORT19, ratio18_1, true);
+motor CenterDrive = motor(PORT18, ratio18_1, false);
 drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 200, 295, 40, mm, 1);
 motor Arm = motor(PORT8, ratio18_1, false);
 motor Claw = motor(PORT3, ratio18_1, false);
-motor ForksMotorA = motor(PORT4, ratio18_1, false);
-motor ForksMotorB = motor(PORT5, ratio18_1, false);
-motor_group Forks = motor_group(ForksMotorA, ForksMotorB);
+motor ForksMotorLeft = motor(PORT12, ratio18_1, false);
+motor ForksMotorRight = motor(PORT20, ratio18_1, true);
+motor_group Forks = motor_group(ForksMotorLeft, ForksMotorRight);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
@@ -24,6 +25,7 @@ bool RemoteControlCodeEnabled = true;
 // define variables used for controlling motors based on controller inputs
 bool Controller1LeftShoulderControlMotorsStopped = true;
 bool Controller1RightShoulderControlMotorsStopped = true;
+bool Controller1CenterDriveMotorStopped = true;
 bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
 
@@ -76,15 +78,15 @@ int rc_auto_loop_function_Controller1() {
         RightDriveSmart.setVelocity(drivetrainRightSideSpeed, percent);
         RightDriveSmart.spin(forward);
       }
-      // check the ButtonL1/ButtonL2 status to control Arm
+      // check the ButtonL1/ButtonL2 status to control the forks
       if (Controller1.ButtonL1.pressing()) {
-        Arm.spin(forward);
+        Forks.spin(forward);
         Controller1LeftShoulderControlMotorsStopped = false;
       } else if (Controller1.ButtonL2.pressing()) {
-        Arm.spin(reverse);
+        Forks.spin(reverse);
         Controller1LeftShoulderControlMotorsStopped = false;
       } else if (!Controller1LeftShoulderControlMotorsStopped) {
-        Arm.stop();
+        Forks.stop();
         // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
         Controller1LeftShoulderControlMotorsStopped = true;
       }
@@ -99,6 +101,18 @@ int rc_auto_loop_function_Controller1() {
         Claw.stop();
         // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
         Controller1RightShoulderControlMotorsStopped = true;
+      }
+      // check the Left/Right Arrows status to control the center drive wheel
+      if (Controller1.ButtonLeft.pressing()) {
+        CenterDrive.spin(forward);
+        Controller1CenterDriveMotorStopped = false;
+      } else if (Controller1.ButtonRight.pressing()) {
+        CenterDrive.spin(reverse);
+        Controller1CenterDriveMotorStopped = false;
+      } else if (!Controller1CenterDriveMotorStopped) {
+        CenterDrive.stop();
+        // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
+        Controller1CenterDriveMotorStopped = true;
       }
     }
     // wait before repeating the process
