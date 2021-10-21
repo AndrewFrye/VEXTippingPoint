@@ -1,5 +1,5 @@
 /.vscode
 /bin
 /build
-/.code-workspace
+workspace.code-workspace
 compile_commands.json

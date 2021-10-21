@@ -7,22 +7,13 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller
-// Drivetrain           drivetrain    1, 10
-// Arm                  motor         8
-// Claw                 motor         3
-// Forks                motor_group   4, 5
-// ---- END VEXCODE CONFIGURED DEVICES ----
-
 #include "vex.h"
 
 using namespace vex;
 
 // robot motor and sensor settings
-void roboConfigs() {
+void roboConfigs()
+{
   Arm.setStopping(brake);
   Claw.setStopping(brake);
   Drivetrain.setStopping(brake);
@@ -32,34 +23,39 @@ void roboConfigs() {
 
 competition Competition;
 
-void pre_auton(void){
-    vexcodeInit();
-    roboConfigs();
+void pre_auton(void)
+{
+  vexcodeInit();
+  roboConfigs();
 }
 
-void autonomous(void){
-
+void autonomous(void)
+{
 }
 
-void usercontrol(void){
-  while(1){
+void usercontrol(void)
+{
+  while (1)
+  {
     wait(20, msec);
   }
 }
 
-int main() {
+int main()
+{
 
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
+
+  //stop all tasks between sections
+  Competition.bStopAllTasksBetweenModes = true;
 
   // Run the pre-autonomous function.
   pre_auton();
 
   // Prevent main from exiting with an infinite loop.
-  while (true) {
+  while (true)
+  {
     wait(100, msec);
   }
-  
-
-  
 }
