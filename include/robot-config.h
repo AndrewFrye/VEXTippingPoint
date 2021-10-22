@@ -9,6 +9,7 @@ extern drivetrain Drivetrain;
 extern motor Arm;
 extern motor Claw;
 extern motor_group Forks;
+extern motor CenterDrive;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

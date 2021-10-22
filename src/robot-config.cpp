@@ -15,8 +15,8 @@ motor CenterDrive = motor(PORT18, ratio18_1, false);
 drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 200, 295, 40, mm, 1);
 motor Arm = motor(PORT8, ratio18_1, false);
 motor Claw = motor(PORT3, ratio18_1, false);
-motor ForksMotorLeft = motor(PORT12, ratio18_1, false);
-motor ForksMotorRight = motor(PORT20, ratio18_1, true);
+motor ForksMotorLeft = motor(PORT12, ratio18_1, true);
+motor ForksMotorRight = motor(PORT20, ratio18_1, false);
 motor_group Forks = motor_group(ForksMotorLeft, ForksMotorRight);
 
 // VEXcode generated functions

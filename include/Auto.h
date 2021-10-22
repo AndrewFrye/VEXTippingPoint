@@ -9,5 +9,6 @@ float forksGearRatio;
 class Auto{
     public:
         Auto(motor_group Forks, float forksGearRatio);
-        void forkLift (float angle);
+        void forkLift (float angle, bool direction);
+        void autoMain ();
 };
