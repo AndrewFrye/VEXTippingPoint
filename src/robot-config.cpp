@@ -5,18 +5,18 @@ using signature = vision::signature;
 using code = vision::code;
 
 // A global instance of brain used for printing to the V5 Brain screen
-brain  Brain;
+brain Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor LeftDriveSmart = motor(PORT11, ratio36_1, false);
-motor RightDriveSmart = motor(PORT19, ratio36_1, true);
+motor LeftDriveSmart = motor(PORT11, ratio18_1, false);
+motor RightDriveSmart = motor(PORT19, ratio18_1, true);
 motor CenterDrive = motor(PORT18, ratio18_1, false);
 drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 200, 295, 40, mm, 1);
 motor Arm = motor(PORT8, ratio18_1, false);
 motor Claw = motor(PORT3, ratio18_1, false);
-motor ForksMotorLeft = motor(PORT12, ratio18_1, true);
-motor ForksMotorRight = motor(PORT20, ratio18_1, false);
+motor ForksMotorLeft = motor(PORT12, ratio36_1, true);
+motor ForksMotorRight = motor(PORT20, ratio36_1, false);
 motor_group Forks = motor_group(ForksMotorLeft, ForksMotorRight);
 
 // VEXcode generated functions
@@ -30,86 +30,114 @@ bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
 
 // define a task that will handle monitoring inputs from Controller1
-int rc_auto_loop_function_Controller1() {
+int rc_auto_loop_function_Controller1()
+{
   // process the controller input every 20 milliseconds
   // update the motors based on the input values
-  while(true) {
-    if(RemoteControlCodeEnabled) {
+  while (true)
+  {
+    if (RemoteControlCodeEnabled)
+    {
       // calculate the drivetrain motor velocities from the controller joystick axies
       // left = Axis3
       // right = Axis2
       int drivetrainLeftSideSpeed = Controller1.Axis3.position();
       int drivetrainRightSideSpeed = Controller1.Axis2.position();
-      
+
       // check if the value is inside of the deadband range
-      if (drivetrainLeftSideSpeed < 5 && drivetrainLeftSideSpeed > -5) {
+      if (drivetrainLeftSideSpeed < 5 && drivetrainLeftSideSpeed > -5)
+      {
         // check if the left motor has already been stopped
-        if (DrivetrainLNeedsToBeStopped_Controller1) {
+        if (DrivetrainLNeedsToBeStopped_Controller1)
+        {
           // stop the left drive motor
           LeftDriveSmart.stop();
           // tell the code that the left motor has been stopped
           DrivetrainLNeedsToBeStopped_Controller1 = false;
         }
-      } else {
+      }
+      else
+      {
         // reset the toggle so that the deadband code knows to stop the left motor nexttime the input is in the deadband range
         DrivetrainLNeedsToBeStopped_Controller1 = true;
       }
       // check if the value is inside of the deadband range
-      if (drivetrainRightSideSpeed < 5 && drivetrainRightSideSpeed > -5) {
+      if (drivetrainRightSideSpeed < 5 && drivetrainRightSideSpeed > -5)
+      {
         // check if the right motor has already been stopped
-        if (DrivetrainRNeedsToBeStopped_Controller1) {
+        if (DrivetrainRNeedsToBeStopped_Controller1)
+        {
           // stop the right drive motor
           RightDriveSmart.stop();
           // tell the code that the right motor has been stopped
           DrivetrainRNeedsToBeStopped_Controller1 = false;
         }
-      } else {
+      }
+      else
+      {
         // reset the toggle so that the deadband code knows to stop the right motor next time the input is in the deadband range
         DrivetrainRNeedsToBeStopped_Controller1 = true;
       }
-      
+
       // only tell the left drive motor to spin if the values are not in the deadband range
-      if (DrivetrainLNeedsToBeStopped_Controller1) {
+      if (DrivetrainLNeedsToBeStopped_Controller1)
+      {
         LeftDriveSmart.setVelocity(drivetrainLeftSideSpeed, percent);
         LeftDriveSmart.spin(forward);
       }
       // only tell the right drive motor to spin if the values are not in the deadband range
-      if (DrivetrainRNeedsToBeStopped_Controller1) {
+      if (DrivetrainRNeedsToBeStopped_Controller1)
+      {
         RightDriveSmart.setVelocity(drivetrainRightSideSpeed, percent);
         RightDriveSmart.spin(forward);
       }
       // check the ButtonL1/ButtonL2 status to control the forks
-      if (Controller1.ButtonL1.pressing()) {
+      if (Controller1.ButtonL1.pressing())
+      {
         Forks.spin(forward);
         Controller1LeftShoulderControlMotorsStopped = false;
-      } else if (Controller1.ButtonL2.pressing()) {
+      }
+      else if (Controller1.ButtonL2.pressing())
+      {
         Forks.spin(reverse);
         Controller1LeftShoulderControlMotorsStopped = false;
-      } else if (!Controller1LeftShoulderControlMotorsStopped) {
+      }
+      else if (!Controller1LeftShoulderControlMotorsStopped)
+      {
         Forks.stop();
         // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
         Controller1LeftShoulderControlMotorsStopped = true;
       }
       // check the ButtonR1/ButtonR2 status to control Claw
-      if (Controller1.ButtonR1.pressing()) {
+      if (Controller1.ButtonR1.pressing())
+      {
         Claw.spin(forward);
         Controller1RightShoulderControlMotorsStopped = false;
-      } else if (Controller1.ButtonR2.pressing()) {
+      }
+      else if (Controller1.ButtonR2.pressing())
+      {
         Claw.spin(reverse);
         Controller1RightShoulderControlMotorsStopped = false;
-      } else if (!Controller1RightShoulderControlMotorsStopped) {
+      }
+      else if (!Controller1RightShoulderControlMotorsStopped)
+      {
         Claw.stop();
         // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
         Controller1RightShoulderControlMotorsStopped = true;
       }
       // check the Left/Right Arrows status to control the center drive wheel
-      if (Controller1.ButtonLeft.pressing()) {
+      if (Controller1.ButtonLeft.pressing())
+      {
         CenterDrive.spin(forward);
         Controller1CenterDriveMotorStopped = false;
-      } else if (Controller1.ButtonRight.pressing()) {
+      }
+      else if (Controller1.ButtonRight.pressing())
+      {
         CenterDrive.spin(reverse);
         Controller1CenterDriveMotorStopped = false;
-      } else if (!Controller1CenterDriveMotorStopped) {
+      }
+      else if (!Controller1CenterDriveMotorStopped)
+      {
         CenterDrive.stop();
         // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
         Controller1CenterDriveMotorStopped = true;
@@ -126,6 +154,7 @@ int rc_auto_loop_function_Controller1() {
  * 
  * This should be called at the start of your int main function.
  */
-void vexcodeInit( void ) {
+void vexcodeInit(void)
+{
   task rc_auto_loop_task_Controller1(rc_auto_loop_function_Controller1);
 }

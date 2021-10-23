@@ -2,13 +2,15 @@
 
 using namespace vex;
 
-motor_group forks;
+class Auto
+{
+public:
+    Auto(motor_group Forks, float forksGearRatio);
+    Auto();
+    void forkLift(float angle);
+    void autoMain();
 
-float forksGearRatio;
-
-class Auto{
-    public:
-        Auto(motor_group Forks, float forksGearRatio);
-        void forkLift (float angle, bool direction);
-        void autoMain ();
+private:
+    motor_group forkGroup;
+    float forksGearRatio;
 };

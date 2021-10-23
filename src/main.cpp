@@ -8,11 +8,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
-//#include <Auto.h>
+#include <Auto.h>
 
 using namespace vex;
-
-//Auto Autonomous(Forks, (5.0 / 3.0));
 
 // robot motor and sensor settings
 void roboConfigs()
@@ -23,6 +21,7 @@ void roboConfigs()
   Drivetrain.setStopping(brake);
   Forks.setStopping(brake);
   Drivetrain.setDriveVelocity(100, percent);
+  Drivetrain.setTurnVelocity(50, percent);
   CenterDrive.setVelocity(100, percent);
 }
 
@@ -36,7 +35,10 @@ void pre_auton(void)
 
 void autonomous(void)
 {
-  //Autonomous.autoMain();
+  Auto Autonomous(Forks, (5.0 / 3.0));
+
+  //Comment out this line if Auto is not working properly
+  Autonomous.autoMain();
 }
 
 void usercontrol(void)

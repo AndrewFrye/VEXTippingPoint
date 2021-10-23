@@ -2,26 +2,17 @@
 
 Auto::Auto(motor_group Forks, float ForksGearRatio)
 {
-    forks = Forks;
-    forksGearRatio = ForksGearRatio;
+  forkGroup = Forks;
+  forksGearRatio = ForksGearRatio;
 }
 
-void Auto::forkLift(float angle, bool direction)
+void Auto::forkLift(float angle)
 {
-    //Determines if the forks should be moving up or down
-    if (direction)
-    {
-        forks.spinTo(angle * forksGearRatio, degrees, true);
-    }
-    else if (!direction)
-    {
-        forks.spinTo(angle * forksGearRatio * -1, degrees, true);
-    }
+  forkGroup.spinFor(fwd, angle * forksGearRatio, deg);
 }
-
 void Auto::autoMain()
 {
-    /*
+  /*
     Start on the side of the see-saw that has a tower on it
     Turn 90 Degrees to the right
     back up a bit
@@ -34,8 +25,12 @@ void Auto::autoMain()
     back up
     */
 
-    Drivetrain.turnFor(90, degrees, true);
-    Drivetrain.driveFor(-10, inches, true);
-    forkLift(135, true);
-    Drivetrain.driveFor(20, inches, true);
+  Drivetrain.turnFor(70, deg, true);
+  Drivetrain.driveFor(-10, inches, true);
+  forkLift(-150);
+  Drivetrain.driveFor(10, inches, true);
+  forkLift(50);
+  Drivetrain.driveFor(30, inches, true);
+  forkLift(-50);
+  Drivetrain.driveFor(-20, inches, true);
 }
